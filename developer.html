@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Developer Panel - Ashutosh Saini</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="tri"></div>
+<div class="tw" id="toastWrap"></div>
+
+<!-- DEV LOGIN -->
+<div id="devLoginScreen">
+<div class="admin-login">
+<div class="admin-login-ico">?????</div>
+<h2>Developer Panel</h2>
+<p style="font-size:.72em;color:var(--td);margin-bottom:4px">Ashutosh Saini</p>
+<p style="font-size:.62em;color:var(--no);margin-bottom:14px">?? Authorized Access Only</p>
+<div class="fg"><input type="password" class="fi" id="devPass" placeholder="Developer password" onkeypress="if(event.key==='Enter')devLogin()"></div>
+<button class="bbtn pr" onclick="devLogin()" style="width:100%;justify-content:center;padding:11px">?? Developer Login</button>
+<p style="margin-top:10px;font-size:.62em;color:var(--tm)">This panel has FULL control over the app</p>
+</div>
+</div>
+
+<!-- DEV DASHBOARD -->
+<div id="devDashboard" style="display:none">
+<div class="admin-wrap">
+
+<div class="dev-banner">
+<h2>????? Developer Panel</h2>
+<p>Full Control - Ashutosh Saini</p>
+<div style="margin-top:10px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+<a href="index.html" class="bbtn pr">??? View App</a>
+<a href="admin.html" class="bbtn w">?? Admin Panel</a>
+<button class="bbtn no" onclick="devLogout()">?? Logout</button>
+</div>
+</div>
+
+<!-- DEV TABS -->
+<div class="admin-tabs">
+<button class="atab on" onclick="devTab('overview',this)">?? Overview</button>
+<button class="atab" onclick="devTab('branding',this)">??? Branding</button>
+<button class="atab" onclick="devTab('controls',this)">??? Controls</button>
+<button class="atab" onclick="devTab('data',this)">?? Data</button>
+<button class="atab" onclick="devTab('security',this)">?? Security</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="apanel on" id="dev-overview">
+<div id="devOverview"></div>
+</div>
+
+<!-- BRANDING (Dev Only) -->
+<div class="apanel" id="dev-branding">
+<div class="bx">
+<h3>??? App Branding (Developer Only)</h3>
+<p style="font-size:.72em;color:var(--a);margin-bottom:12px">? Only you can change these. Admin cannot touch these fields.</p>
+
+<div class="fg"><label class="fl">Center Name (Header Title)</label><input type="text" class="fi" id="devCenterName" placeholder="??? Grahak Seva Kendra"></div>
+<div class="fg"><label class="fl">Subtitle</label><input type="text" class="fi" id="devSubtitle" placeholder="CSC - Digital Service Center"></div>
+<div class="fg"><label class="fl">Shop / Business Name</label><input type="text" class="fi" id="devShopName" placeholder="Grahak Seva Kendra"></div>
+<div class="fg"><label class="fl">Logo Emoji</label><input type="text" class="fi" id="devLogo" placeholder="???" maxlength="4"></div>
+
+<hr style="border:none;border-top:1px dashed var(--gb);margin:14px 0">
+
+<div class="fg"><label class="fl">Developer Name</label><input type="text" class="fi" id="devName" placeholder="Ashutosh Saini"></div>
+<div class="fg"><label class="fl">Developer Contact</label><input type="text" class="fi" id="devContact" placeholder="+91 9999999999"></div>
+<div class="fg"><label class="fl">App Version</label><input type="text" class="fi" id="devVersion" placeholder="2.0.1"></div>
+
+<button class="bbtn ok" onclick="saveBranding()" style="width:100%;justify-content:center;padding:11px">?? Save Branding</button>
+</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="apanel" id="dev-controls">
+<div class="bx">
+<h3>??? Admin Controls</h3>
+<p style="font-size:.72em;color:var(--td);margin-bottom:12px">Control what admin can and cannot do</p>
+
+<div class="fg"><label class="fl">Admin Password (you can see & change)</label><input type="text" class="fi" id="ctrlAdminPass"></div>
+
+<div class="tog-wrap">
+<span style="font-size:.82em">Allow Admin to change Center Name</span>
+<label class="tog"><input type="checkbox" id="ctrlAdminName"><span class="tog-track"></span></label>
+</div>
+<div class="tog-wrap">
+<span style="font-size:.82em">Allow Admin to change Logo</span>
+<label class="tog"><input type="checkbox" id="ctrlAdminLogo"><span class="tog-track"></span></label>
+</div>
+
+<button class="bbtn ok" onclick="saveControls()" style="width:100%;justify-content:center;padding:11px;margin-top:10px">?? Save Controls</button>
+</div>
+</div>
+
+<!-- DATA MANAGEMENT -->
+<div class="apanel" id="dev-data">
+<div class="bx">
+<h3>?? Data Management</h3>
+
+<button class="bbtn ok" onclick="exportDataJSON()" style="width:100%;justify-content:center;margin-bottom:8px">?? Export Data as JSON</button>
+<p style="font-size:.68em;color:var(--td);margin-bottom:14px;text-align:center">Download karke Google Drive me upload kare</p>
+
+<div class="fg"><label class="fl">Import Data from JSON File</label>
+<input type="file" class="fi" id="importFile" accept=".json" style="padding:8px"></div>
+<button class="bbtn pr" onclick="importDataJSON()" style="width:100%;justify-content:center;margin-bottom:14px">?? Import Data</button>
+
+<hr style="border:none;border-top:1px dashed var(--gb);margin:14px 0">
+
+<h3 style="font-size:.88em;margin-bottom:10px">?? Google Drive Sync</h3>
+<p style="font-size:.68em;color:var(--td);margin-bottom:8px">
+Steps:<br>
+1. Export JSON ? Upload to Google Drive<br>
+2. Set sharing to "Anyone with link"<br>
+3. Get direct download link<br>
+4. Paste link below
+</p>
+<div class="fg"><label class="fl">Google Drive JSON URL</label>
+<input type="text" class="fi" id="driveUrl" placeholder="https://drive.google.com/..."></div>
+<button class="bbtn pr" onclick="saveDriveUrl()" style="width:100%;justify-content:center;margin-bottom:6px">?? Save URL</button>
+<button class="bbtn w" onclick="loadFromDrive()" style="width:100%;justify-content:center;margin-bottom:14px">?? Load from Drive</button>
+
+<hr style="border:none;border-top:1px dashed var(--gb);margin:14px 0">
+
+<button class="bbtn no" onclick="resetAllData()" style="width:100%;justify-content:center">??? RESET ALL DATA</button>
+<p style="font-size:.62em;color:var(--no);text-align:center;margin-top:5px">?? This will delete everything!</p>
+</div>
+</div>
+
+<!-- SECURITY -->
+<div class="apanel" id="dev-security">
+<div class="bx">
+<h3>?? Change Developer Password</h3>
+<p style="font-size:.72em;color:var(--no);margin-bottom:12px">?? Remember this password! It cannot be recovered.</p>
+<div class="fg"><label class="fl">Current Password</label><input type="password" class="fi" id="oldDevPass"></div>
+<div class="fg"><label class="fl">New Password (min 6 chars)</label><input type="password" class="fi" id="newDevPass"></div>
+<div class="fg"><label class="fl">Confirm New Password</label><input type="password" class="fi" id="confirmDevPass"></div>
+<button class="bbtn pr" onclick="changeDevPass()" style="width:100%;justify-content:center;padding:11px">?? Change Developer Password</button>
+</div>
+
+<div class="bx">
+<h3>?? Security Notes</h3>
+<div style="font-size:.75em;color:var(--td);line-height:1.6">
+<p>?? <strong>Developer Password:</strong> Only you know this. Cannot be reset without clearing all data.</p>
+<p style="margin-top:6px">?? <strong>Admin Password:</strong> You can see and change admin password from Controls tab.</p>
+<p style="margin-top:6px">?? <strong>Branding Lock:</strong> Center Name, Logo, Shop Name - only changeable from this panel.</p>
+<p style="margin-top:6px">?? <strong>Data:</strong> All data stored in localStorage. Export regularly to Google Drive for backup.</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/developer.js"></script>
+</body>
+</html>

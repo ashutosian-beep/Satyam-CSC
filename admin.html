@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Admin - CSC Center</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="tri"></div>
+<div class="tw" id="toastWrap"></div>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+<div class="admin-login">
+<div class="admin-login-ico">??</div>
+<h2>Admin Login</h2>
+<p style="font-size:.72em;color:var(--td);margin-bottom:14px">Grahak Seva Kendra - Admin Panel</p>
+<div class="fg"><input type="password" class="fi" id="adminPass" placeholder="Admin password" onkeypress="if(event.key==='Enter')adminLogin()"></div>
+<button class="bbtn pr" onclick="adminLogin()" style="width:100%;justify-content:center;padding:11px">?? Login</button>
+<p style="margin-top:10px;font-size:.68em;color:var(--td)">Default: admin123</p>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="adminDash" style="display:none">
+<div class="admin-wrap">
+<div class="admin-head">
+<h1>?? Admin Panel</h1>
+<p style="color:var(--td);font-size:.78em">Manage your Grahak Seva Kendra</p>
+<div style="margin-top:10px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+<a href="index.html" class="bbtn pr">??? View Center</a>
+<button class="bbtn no" onclick="adminLogout()">?? Logout</button>
+</div>
+<div id="devInfoDisplay"></div>
+</div>
+
+<!-- TABS -->
+<div class="admin-tabs">
+<button class="atab on" onclick="switchTab('dash',this)">?? Dashboard</button>
+<button class="atab" onclick="switchTab('info',this)">??? Center Info</button>
+<button class="atab" onclick="switchTab('services',this)">?? Services</button>
+<button class="atab" onclick="switchTab('cats',this)">?? Categories</button>
+<button class="atab" onclick="switchTab('orders',this)">?? Orders</button>
+<button class="atab" onclick="switchTab('banners',this)">?? Banners</button>
+<button class="atab" onclick="switchTab('theme',this)">?? Theme</button>
+<button class="atab" onclick="switchTab('settings',this)">?? Settings</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="apanel on" id="panel-dash">
+<div class="stats-grid" id="statsGrid"></div>
+<div class="bx"><h3>?? Recent Applications</h3><div id="recentOrders"></div></div>
+</div>
+
+<!-- CENTER INFO -->
+<div class="apanel" id="panel-info">
+<div class="bx">
+<h3>??? Center Details</h3>
+<div id="lockNotice"></div>
+
+<div class="fg"><label class="fl">?? Center Name (Developer Only)</label><input type="text" class="fi" id="infoName" style="opacity:0.5"></div>
+<div class="fg"><label class="fl">?? Subtitle (Developer Only)</label><input type="text" class="fi" id="infoSub" style="opacity:0.5"></div>
+<div class="fg"><label class="fl">?? Logo Emoji (Developer Only)</label><input type="text" class="fi" id="infoLogo" style="opacity:0.5"></div>
+
+<hr style="border:none;border-top:1px dashed var(--gb);margin:14px 0">
+<p style="font-size:.72em;color:var(--ok);margin-bottom:10px">? Below fields you can edit:</p>
+
+<div class="fg"><label class="fl">Owner Name</label><input type="text" class="fi" id="infoOwner"></div>
+<div class="fg"><label class="fl">Center Code</label><input type="text" class="fi" id="infoCode"></div>
+<div class="fg"><label class="fl">Phone</label><input type="tel" class="fi" id="infoPhone"></div>
+<div class="fg"><label class="fl">Alt Phone</label><input type="tel" class="fi" id="infoAltPhone"></div>
+<div class="fg"><label class="fl">Email</label><input type="email" class="fi" id="infoEmail"></div>
+<div class="fg"><label class="fl">WhatsApp (no +)</label><input type="text" class="fi" id="infoWhatsapp" placeholder="919876543210"></div>
+<div class="fg"><label class="fl">UPI ID</label><input type="text" class="fi" id="infoUpi"></div>
+<div class="fg"><label class="fl">Address</label><textarea class="fi" id="infoAddress" rows="2"></textarea></div>
+<div class="fg"><label class="fl">Welcome Message</label><textarea class="fi" id="infoWelcome" rows="2"></textarea></div>
+<div class="fg"><label class="fl">Footer Text</label><input type="text" class="fi" id="infoFooter"></div>
+<div class="fg"><label class="fl">Currency</label><input type="text" class="fi" id="infoCurrency" maxlength="3"></div>
+<div class="fg"><label class="fl">Processing Fee</label><input type="number" class="fi" id="infoSC" min="0"></div>
+<button class="bbtn ok" onclick="saveInfo()" style="width:100%;justify-content:center;padding:11px">?? Save Info</button>
+</div></div>
+
+<!-- SERVICES -->
+<div class="apanel" id="panel-services">
+<div class="bx"><h3>? Add Service</h3>
+<div class="fg"><label class="fl">Category</label><select class="fi" id="svcCatSelect"></select></div>
+<div class="fg"><label class="fl">Service Name</label><input type="text" class="fi" id="svcName" placeholder="Service name"></div>
+<div class="fg"><label class="fl">Emoji</label><input type="text" class="fi" id="svcIcon" placeholder="??" maxlength="4"></div>
+<div class="fg"><label class="fl">Our Fee</label><input type="number" class="fi" id="svcPrice" placeholder="100" min="0"></div>
+<div class="fg"><label class="fl">Market Price</label><input type="number" class="fi" id="svcMrp" placeholder="300" min="0"></div>
+<div class="fg"><label class="fl">Description</label><input type="text" class="fi" id="svcDesc" placeholder="Service details"></div>
+<div class="fg"><label class="fl">Time</label><input type="text" class="fi" id="svcTime" placeholder="7-15 din"></div>
+<div class="fg"><label class="fl">Documents</label><input type="text" class="fi" id="svcDocs" placeholder="Aadhaar, Photo..."></div>
+<div class="tog-wrap"><span style="font-size:.82em">?? Popular</span><label class="tog"><input type="checkbox" id="svcFeatured"><span class="tog-track"></span></label></div>
+<button class="bbtn ok" onclick="addService()" style="width:100%;justify-content:center;margin-top:8px">? Add</button>
+</div>
+<div class="bx"><h3>?? All Services (<span id="totalSvcCount">0</span>)</h3><div id="svcList"></div></div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="apanel" id="panel-cats">
+<div class="bx"><h3>? Add Category</h3>
+<div style="display:flex;gap:6px"><input type="text" class="fi" id="newCatIcon" placeholder="??" style="width:55px" maxlength="4"><input type="text" class="fi" id="newCatName" placeholder="Name" style="flex:1"><button class="bbtn ok" onclick="addCat()">Add</button></div>
+</div>
+<div class="bx"><h3>?? Categories</h3><div id="catList"></div></div>
+</div>
+
+<!-- ORDERS -->
+<div class="apanel" id="panel-orders"><div class="bx"><h3>?? All Applications</h3><div id="allOrdersList"></div></div></div>
+
+<!-- BANNERS -->
+<div class="apanel" id="panel-banners">
+<div class="bx"><h3>? Add Banner</h3>
+<div class="fg"><input type="text" class="fi" id="newBannerText" placeholder="Banner text..."></div>
+<button class="bbtn ok" onclick="addBanner()" style="width:100%;justify-content:center">? Add</button>
+</div>
+<div class="bx"><h3>?? Banners</h3><div id="bannerList"></div></div>
+</div>
+
+<!-- THEME -->
+<div class="apanel" id="panel-theme">
+<div class="bx"><h3>?? Theme Colors</h3>
+<div class="cp-row"><label>Primary</label><input type="color" id="thP"></div>
+<div class="cp-row"><label>Secondary</label><input type="color" id="thS"></div>
+<div class="cp-row"><label>Accent</label><input type="color" id="thA"></div>
+<div class="cp-row"><label>Background</label><input type="color" id="thB"></div>
+<div class="cp-row"><label>Card BG</label><input type="color" id="thC"></div>
+<div class="cp-row"><label>Text</label><input type="color" id="thT"></div>
+<button class="bbtn ok" onclick="saveTheme()" style="width:100%;justify-content:center">?? Apply</button>
+</div>
+<div class="bx"><h3>??? Quick Themes</h3>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">
+<button class="bbtn" onclick="quickTheme('saffron')" style="background:linear-gradient(135deg,#ff6b35,#e8530e);color:#fff">?? Saffron</button>
+<button class="bbtn" onclick="quickTheme('navy')" style="background:linear-gradient(135deg,#1e3a5f,#0d2137);color:#fff">?? Navy</button>
+<button class="bbtn" onclick="quickTheme('emerald')" style="background:linear-gradient(135deg,#138808,#0d6b06);color:#fff">?? Emerald</button>
+<button class="bbtn" onclick="quickTheme('royal')" style="background:linear-gradient(135deg,#6a1b9a,#4a148c);color:#fff">?? Royal</button>
+<button class="bbtn" onclick="quickTheme('tricolor')" style="background:linear-gradient(90deg,#FF9933,#fff,#138808);color:#333">???? Tricolor</button>
+<button class="bbtn" onclick="quickTheme('gold')" style="background:linear-gradient(135deg,#b8860b,#ffd700);color:#333">? Gold</button>
+</div></div>
+</div>
+
+<!-- SETTINGS -->
+<div class="apanel" id="panel-settings">
+<div class="bx"><h3>?? Change Admin Password</h3>
+<div class="fg"><label class="fl">Current</label><input type="password" class="fi" id="oldAdminPass"></div>
+<div class="fg"><label class="fl">New</label><input type="password" class="fi" id="newAdminPass"></div>
+<div class="fg"><label class="fl">Confirm</label><input type="password" class="fi" id="confirmAdminPass"></div>
+<button class="bbtn pr" onclick="changeAdminPass()" style="width:100%;justify-content:center">?? Change</button>
+</div>
+<div class="bx"><h3>?? About</h3>
+<p style="font-size:.78em;color:var(--td);line-height:1.6">
+This app is developed and maintained by the developer. For any changes to Center Name, Logo or Shop Name, please contact the developer.<br><br>
+<strong style="color:var(--p)">?? Note:</strong> Center Name, Logo and Shop Name can only be changed from Developer Panel.
+</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

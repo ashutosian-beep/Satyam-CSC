@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Satyam Computers</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+<div class="bgfx"><div class="bgc"></div><div class="bgc"></div><div class="bgc"></div></div>
+<div class="tw" id="toastWrap"></div>
+
+<div id="mainPage">
+<div class="tri"></div>
+<header class="hdr">
+<div class="ht">
+<div class="logo">
+<div class="le" id="logoEmoji">???</div>
+<div class="lt"><h1 id="centerTitle">Customer Service Center</h1><p id="centerSub">CSC Center</p></div>
+</div>
+<div class="ha">
+<button class="hb" onclick="showWishlist()">??<span class="bdg" id="wishBadge" style="display:none">0</span></button>
+<button class="hb" onclick="openCart()">??<span class="bdg" id="cartBadge" style="display:none">0</span></button>
+</div>
+</div>
+<div class="sw"><span class="sic">??</span>
+<input type="text" class="si" id="searchInput" placeholder="Search... Aadhaar, PAN, Passport, Certificate..." oninput="doSearch()"></div>
+</header>
+
+<div class="mq"><span id="marqueeText"></span></div>
+<div class="gn"><div class="gni">??</div><div class="gnt" id="welcomeMsg"></div></div>
+<div class="qs" id="quickStats"></div>
+<div class="tb">
+<div class="ti"><div class="tii">?</div><div class="tv">100%</div><div class="tl">Verified</div></div>
+<div class="ti"><div class="tii">?</div><div class="tv">Fast</div><div class="tl">Service</div></div>
+<div class="ti"><div class="tii">??</div><div class="tv">Safe</div><div class="tl">Data</div></div>
+<div class="ti"><div class="tii">??</div><div class="tv">24/7</div><div class="tl">Support</div></div>
+</div>
+
+<div class="sec">
+<div class="sh"><div class="st"><em>?? Service Categories</em></div><span class="sl" onclick="showAllServices()">All ?</span></div>
+<div class="cs" id="catsContainer"></div>
+</div>
+
+<div class="sec" id="featuredSection">
+<div class="sh"><div class="st"><em>?? Popular Services</em></div></div>
+<div class="fs" id="featuredContainer"></div>
+</div>
+
+<div class="sec" style="padding-bottom:0">
+<div class="sh"><div class="st"><em id="gridTitle">??? All Government Services</em></div>
+<span style="font-size:.63em;color:var(--td)" id="serviceCount">0</span></div>
+<div class="sg" id="serviceGrid"></div>
+</div>
+
+<div class="dev-mark" id="devMark"></div>
+</div>
+
+<!-- CHECKOUT PAGE -->
+<div class="cop" id="checkoutPage">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
+<button class="hb" onclick="goHome()">?</button>
+<h2 style="background:linear-gradient(135deg,var(--p),var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1em">?? Application Form</h2>
+</div>
+<div id="checkoutForm">
+<div class="bx"><h3>?? Applicant Details</h3>
+<div class="fg"><label class="fl">Full Name *</label><input type="text" class="fi" id="custName" placeholder="Name as per Aadhaar Card"></div>
+<div class="fg"><label class="fl">Mobile Number *</label><input type="tel" class="fi" id="custPhone" placeholder="10 digit mobile number"></div>
+<div class="fg"><label class="fl">Aadhaar Number</label><input type="text" class="fi" id="custAadhaar" placeholder="12 digit Aadhaar" maxlength="14"></div>
+<div class="fg"><label class="fl">Father / Husband Name</label><input type="text" class="fi" id="custFather" placeholder="Father's or Husband's Name"></div>
+<div class="fg"><label class="fl">Address</label><textarea class="fi" id="custAddress" rows="2" placeholder="Village, Block, District, State"></textarea></div>
+<div class="fg"><label class="fl">Notes</label><input type="text" class="fi" id="custNotes" placeholder="Any special notes"></div>
+</div>
+<div class="bx"><h3>?? Payment Method</h3>
+<div class="po">
+<div class="pt sel" onclick="selectPayment(this,'cash')"><div class="pti">??</div><div>Cash</div></div>
+<div class="pt" onclick="selectPayment(this,'upi')"><div class="pti">??</div><div>UPI</div></div>
+<div class="pt" onclick="selectPayment(this,'bank')"><div class="pti">??</div><div>Bank</div></div>
+</div></div>
+<div class="bx"><h3>?? Selected Services</h3><div id="checkoutItems"></div><div id="checkoutSummary"></div></div>
+<button class="ckb" onclick="placeOrder()">? Submit via WhatsApp</button>
+<div class="wai"><div style="font-size:2em;margin-bottom:4px">??</div><p style="font-size:.73em;color:var(--td)">Your application will be confirmed on WhatsApp. Please bring required documents.</p></div>
+</div>
+<div class="od" id="orderDone"><div class="odi">??</div><h2 style="margin-bottom:7px">Submitted Successfully!</h2>
+<p style="color:var(--td);font-size:.88em">Application sent via WhatsApp</p>
+<p style="color:var(--ok);font-weight:700;font-size:1em" id="orderIdDisplay"></p>
+<p style="color:var(--td);font-size:.72em;margin-top:6px">?? Please visit center with required documents</p><br>
+<button class="bbtn pr" onclick="goHome()">?? Browse More Services</button></div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="ov" id="overlay" onclick="closeCart()"></div>
+<div class="cd" id="cartDrawer">
+<div class="ch"><h2>?? My Applications</h2><button class="cb" onclick="closeCart()">?</button></div>
+<div class="cbd" id="cartBody"></div>
+<div class="cf" id="cartFoot" style="display:none"><div id="cartSummary"></div>
+<button class="ckb" onclick="goCheckout()">?? Proceed to Apply</button></div>
+</div>
+
+<!-- MODAL -->
+<div class="mo" id="modal"><div class="mc" id="modalContent"></div></div>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bn">
+<button class="ni on" onclick="setNav(this);goHome()"><span class="nic">??</span><span>Home</span></button>
+<button class="ni" onclick="setNav(this);filterCat('all')"><span class="nic">??</span><span>Services</span></button>
+<button class="ni" onclick="setNav(this);openCart()"><span class="nic">??</span><span>Apply</span></button>
+<button class="ni" onclick="setNav(this);showWishlist()"><span class="nic">??</span><span>Saved</span></button>
+<button class="ni" onclick="setNav(this);showContact()"><span class="nic">??</span><span>Contact</span></button>
+</nav>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
